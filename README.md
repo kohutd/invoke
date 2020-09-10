@@ -1,11 +1,12 @@
 # Invoke
 
-No REST, no GrapQL.
+No REST, no GraphQL.
 
 ## Basics
 There is a Type. There is a Method.
 You invoke a Method. It returns a Type.
 
+Old style:
 ```javascript
 class Hex extends Type {
     params = {
@@ -24,7 +25,27 @@ class Dec2Hex extends Method {
         });
     }
 }
+```
 
+Functional style:
+```javascript
+function Hex(data) {
+    return useRules({
+        hex: Str,
+    }, data);
+}
+
+function Hex2Dex(params) {
+    const {hex} = useRules({
+        hex: Str,
+    }, params);
+    
+    return Hex({dec: Number(`0x${hex}`)});
+}
+```
+
+rest:
+```javascript
 const methods = {
     "dec2hex": Dec2Hex,
 };
